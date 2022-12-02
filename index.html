@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>strava heatmap</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/leaflet.css" />
+  </head>
+
+  <body>
+    <script src="js/leaflet.js"></script>
+    <script src="js/fundido.js"></script>
+    <div id="map">
+      <script>
+        var map = L.map("map", {
+          attributionControl: true,
+          zoomControl: false,
+        }).setView([39.47292, -0.3799], 12);
+
+        L.tileLayer(
+          "https://api.mapbox.com/styles/v1/santihpuig/ckhxj04u10vso19r98s8byzl3/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic2FudGlocHVpZyIsImEiOiJrYkhOMDVnIn0.ak6qwXtkOps01I5G-LCS_A",
+          {
+            attribution:
+              'Map data &copy; <a href="http://openstreetmap.org"> OpenStreetMap</a> contributors, ' +
+              '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</			a>, ' +
+              'Imagery © <a href="http://mapbox.com">Mapbox</a> ' +
+              '|<a href="http://santihpuig.com">		santihpuig</a>',
+            maxZoom: 18,
+            minZoom: 7,
+            opacity: 1,
+          }
+        ).addTo(map);
+
+        /*Hover info*/
+
+        var info = L.control({ position: "topright" });
+
+        info.onAdd = function (map) {
+          this._div = L.DomUtil.create("div", "info");
+          this.update();
+          return this._div;
+        };
+        info.update = function (feature) {
+          this._div.innerHTML = feature
+            ? '<b style="color: #fa531e"> &nbsp ' +
+              feature.properties.date +
+              "&nbsp" +
+              feature.properties.name +
+              "&nbsp" +
+              feature.properties.dist +
+              " km.</b>"
+            : '<b style="color: #fa531e">Strava activities</b>';
+        };
+
+        info.addTo(map);
+
+        /*Rutas*/
+
+        function style(feature) {
+          return {
+            color: "#fa531e",
+            opacity: 0.5,
+            weight: 1,
+          };
+        }
+
+        function highlightFeature(e) {
+          let layer = e.target;
+          layer.setStyle({
+            weight: 1,
+            color: "white",
+            dashArray: "",
+            Opacity: 1,
+          });
+
+          if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+            layer.bringToFront();
+          }
+
+          info.update(layer.feature);
+        }
+
+        var fundido;
+
+        function resetHighlight(e) {
+          fundido.resetStyle(e.target);
+          info.update();
+        }
+
+        function zoomToFeature(e) {
+          map.fitBounds(e.target.getBounds());
+        }
+
+        function onEachFeature(feature, layer) {
+          layer.on({
+            mouseover: highlightFeature,
+            mouseout: resetHighlight,
+            click: zoomToFeature,
+          });
+        }
+
+        var fundido = L.geoJson(fundido, {
+          style: style,
+          onEachFeature: onEachFeature,
+        }).addTo(map);
+
+        /*.bindTooltip(function (layer) {
+				return ("<p><b>" + layer.feature.properties.date + "</b>&nbsp" + layer.feature.properties.name + "&nbsp" + layer.feature.properties.dist + " km.<p>")
+			})*/
+      </script>
+    </div>
+  </body>
+</html>
