@@ -9,12 +9,6 @@ body {
 	background: white;
   }
 
-/* Fondo blanco - sin mapa 
-
-.leaflet-tile-container {
-	display: none;
-	}*/
-
 .info {
 	padding: 5px;
 	text-align: right;
