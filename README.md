@@ -1,1 +1,1 @@
-# inspirado en stravaheatmap, esta cartografía muestra todas mis rutas en bicicleta registradas en strava
+# Inspirado en Strava Heatmap, esta cartografía muestra todas mis rutas en bicicleta registradas en esta plataforma.
