@@ -6,7 +6,7 @@ var map = L.map("map", {
 }).setView([39.47292, -0.3799], 11);
 
 L.tileLayer(
-  "https://api.mapbox.com/styles/v1/santihpuig/ckhxj04u10vso19r98s8byzl3/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic2FudGlocHVpZyIsImEiOiJrYkhOMDVnIn0.ak6qwXtkOps01I5G-LCS_A",
+  "https://api.mapbox.com/styles/v1/santihpuig/clmhhzovf01iw01qubap9273b/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic2FudGlocHVpZyIsImEiOiJrYkhOMDVnIn0.ak6qwXtkOps01I5G-LCS_A",
   {
     attribution:
       'Map data &copy; <a href="http://openstreetmap.org"> OpenStreetMap</a> contributors, ' +
